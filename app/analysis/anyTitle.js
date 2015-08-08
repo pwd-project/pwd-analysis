@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    name: 'title',
+    name: 'anyTitle',
     description: 'Czy na stronie jest title?',
     run: function (page, callback) {
         page.evaluate(function () {

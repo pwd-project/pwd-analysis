@@ -15,10 +15,8 @@
   "devDependencies": {
     "gulp": "^3.6.0",
     "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-istanbul": "^0.9.0",
     "gulp-jshint": "^1.5.3",
     "gulp-mocha": "^2.0.0",
-    "gulp-plumber": "^1.0.0",
     "jshint-stylish": "^1.0.0"
   },
   "scripts": {
@@ -27,13 +25,12 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "winston": "^1.0.1",
     "body-parser": "^1.13.3",
     "cors": "^2.7.1",
     "express": "~4.9.x",
     "phantom": "^0.7.2",
     "phantomjs": "^1.9.17",
     "request": "^2.60.0",
-    "webpage": "^0.3.0"
+    "winston": "^1.0.1"
   }
 }

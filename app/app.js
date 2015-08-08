@@ -4,7 +4,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     logger = require('winston'),
-    psi = require('psi');
+    psi = require('psi'),
+    w3cjs = require('w3cjs');
 
 var app = module.exports = express();
 
@@ -36,6 +37,19 @@ app.get('/metrics', function (req, resp) {
             resp.json(data);
         }
         resp.end();
+    });
+});
+
+app.get('/validate', function (req, resp) {
+    var target = req.query.url;
+    logger.info('Received url for w3c analysis', target)
+    w3cjs.validate({
+        file: target,
+        output: 'json',
+        callback: function (res) {
+            resp.json(res);
+            resp.end();
+        }
     });
 });
 

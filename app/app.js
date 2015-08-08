@@ -3,7 +3,8 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
-    logger = require('winston');
+    logger = require('winston'),
+    psi = require('psi');
 
 var app = module.exports = express();
 
@@ -21,6 +22,19 @@ app.get('/analysis', function (req, resp) {
     logger.info('Received url to process', target);
     analyser.analyse(target, function (response) {
         resp.json(response);
+        resp.end();
+    });
+});
+
+app.get('/metrics', function (req, resp) {
+    var target = req.query.url;
+    logger.info('Received url for speed analysis', target)
+    psi(target, function (err, data) {
+        if (err) {
+            resp.json(err);
+        } else {
+            resp.json(data);
+        }
         resp.end();
     });
 });

@@ -37,6 +37,20 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect html language attribute', function (done) {
+        //given
+        var htmlLangAnalysis = require('../app/analysis/htmlLang.js');
+
+        //when
+        runAnalysis(htmlLangAnalysis, '/sites/htmlLang.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, language: 'en'});
+            done();
+        }
+    });
+
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

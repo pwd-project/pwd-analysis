@@ -30,6 +30,7 @@
     "express": "~4.9.x",
     "phantom": "^0.7.2",
     "phantomjs": "^1.9.17",
+    "psi": "^1.0.6",
     "request": "^2.60.0",
     "winston": "^1.0.1"
   }

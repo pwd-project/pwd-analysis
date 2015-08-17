@@ -29,7 +29,7 @@ app.get('/analysis', function (req, resp) {
 
 app.get('/metrics', function (req, resp) {
     var target = req.query.url;
-    logger.info('Received url for speed analysis', target)
+    logger.info('Received url for speed analysis', target);
     psi(target, function (err, data) {
         if (err) {
             resp.json(err);
@@ -42,7 +42,7 @@ app.get('/metrics', function (req, resp) {
 
 app.get('/validate', function (req, resp) {
     var target = req.query.url;
-    logger.info('Received url for w3c analysis', target)
+    logger.info('Received url for w3c analysis', target);
     w3cjs.validate({
         file: target,
         output: 'json',

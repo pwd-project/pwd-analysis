@@ -14,7 +14,7 @@ describe('pwd-analysis tests', function () {
         var altAnalysis = require('../app/analysis/alt.js');
 
         //when
-        runAnalysis(altAnalysis, '/sites/withoutAlt.html', check);
+        runAnalysis(altAnalysis, 'sites/withoutAlt.html', check);
 
         //then
         function check(result) {
@@ -28,7 +28,7 @@ describe('pwd-analysis tests', function () {
         var anyTitleAnalysis = require('../app/analysis/anyTitle.js');
 
         //when
-        runAnalysis(anyTitleAnalysis, '/sites/withAnyTitle.html', check);
+        runAnalysis(anyTitleAnalysis, 'sites/withAnyTitle.html', check);
 
         //then
         function check(result) {
@@ -42,7 +42,7 @@ describe('pwd-analysis tests', function () {
         var htmlLangAnalysis = require('../app/analysis/htmlLang.js');
 
         //when
-        runAnalysis(htmlLangAnalysis, '/sites/htmlLang.html', check);
+        runAnalysis(htmlLangAnalysis, 'sites/htmlLang.html', check);
 
         //then
         function check(result) {

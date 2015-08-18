@@ -67,7 +67,7 @@ before(function (done) {
     phantom.create(function (ph) {
         phantomjs = ph;
         done();
-    }, {path: path.dirname(require('phantomjs').path) + '/'});
+    }, {path: path.dirname(require('phantomjs').path) + '/', dnodeOpts: {weak: false} });
 });
 
 afterEach(function () {

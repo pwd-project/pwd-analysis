@@ -26,7 +26,7 @@ var analyser = {
         var self = this;
         var targetResponseCode;
         phantomjs.createPage(function (page) {
-            var response = {};
+            var response = {analysis:{}};
             page.set('settings.resourceTimeout', 5000);
             page.set('onResourceTimeout', function (e) {
                 page.close();
@@ -34,17 +34,17 @@ var analyser = {
             });
 
             page.set('onResourceReceived', function (resource) {
-                if (resource.url == target || resource.url == target+"/") {
+                if (resource.url === target || resource.url === target+'/') {
                     targetResponseCode = resource.status;
                 }
             });
 
             page.open(target, function (status) {
-                if (status == 'success') {
+                if (status === 'success') {
                     app.get('analysis').forEach(function (script) {
                         self.runAnalysis(script, page, function (result) {
-                            response[script.name] = result;
-                            if (Object.keys(response).length === app.get('analysis').length) {
+                            response.analysis[script.name] = result;
+                            if (Object.keys(response.analysis).length === app.get('analysis').length) {
                                 logger.info('Processed ' + Object.keys(response) + ' for ' + target);
                                 page.close();
                                 response.status = {responseCode: targetResponseCode};

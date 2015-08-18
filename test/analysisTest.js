@@ -54,7 +54,7 @@ describe('pwd-analysis tests', function () {
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;
-            webpage.open(path.join(__dirname, filename), function () {
+            webpage.open('file:///' + path.join(__dirname, filename), function () {
                 analysis.run(webpage, check);
             });
         });
@@ -67,7 +67,7 @@ before(function (done) {
     phantom.create(function (ph) {
         phantomjs = ph;
         done();
-    }, {path: path.dirname(require('phantomjs').path) + '/', dnodeOpts: {weak: false} });
+    }, {path: path.dirname(require('phantomjs').path) + '/', dnodeOpts: {weak: false}});
 });
 
 afterEach(function () {

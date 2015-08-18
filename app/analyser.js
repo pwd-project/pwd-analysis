@@ -7,7 +7,7 @@ var app = require('./app'),
 
 phantom.create(function (ph) {
     phantomjs = ph;
-});
+}, { dnodeOpts: {weak: false} });
 
 var analyser = {
 
@@ -24,18 +24,30 @@ var analyser = {
 
     analyse: function (target, callback) {
         var self = this;
+        var targetResponseCode;
         phantomjs.createPage(function (page) {
             var response = {};
+            page.set('settings.resourceTimeout', 5000);
+            page.set('onResourceTimeout', function (e) {
+                page.close();
+                callback({status : {responseCode: e.errorCode}});
+            });
+
+            page.set('onResourceReceived', function (resource) {
+                if (resource.url == target || resource.url == target+"/") {
+                    targetResponseCode = resource.status;
+                }
+            });
+
             page.open(target, function (status) {
-                if (status !== 'success') {
-                    callback('Could not process given url');
-                } else {
+                if (status == 'success') {
                     app.get('analysis').forEach(function (script) {
                         self.runAnalysis(script, page, function (result) {
                             response[script.name] = result;
                             if (Object.keys(response).length === app.get('analysis').length) {
                                 logger.info('Processed ' + Object.keys(response) + ' for ' + target);
                                 page.close();
+                                response.status = {responseCode: targetResponseCode};
                                 callback(response);
                             }
                         });

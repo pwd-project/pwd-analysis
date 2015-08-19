@@ -7,7 +7,7 @@ var app = require('./app'),
 
 phantom.create(function (ph) {
     phantomjs = ph;
-}, { dnodeOpts: {weak: false} });
+}, {dnodeOpts: {weak: false}});
 
 var analyser = {
 
@@ -25,20 +25,13 @@ var analyser = {
     analyse: function (target, callback) {
         var self = this;
         var targetResponseCode;
+        var response = {
+            analysis: {},
+            status: {}
+        };
+
         phantomjs.createPage(function (page) {
-            var response = {analysis:{}};
-            page.set('settings.resourceTimeout', 5000);
-            page.set('onResourceTimeout', function (e) {
-                page.close();
-                callback({status : {responseCode: e.errorCode}});
-            });
-
-            page.set('onResourceReceived', function (resource) {
-                if (resource.url === target || resource.url === target+'/') {
-                    targetResponseCode = resource.status;
-                }
-            });
-
+            setup(page);
             page.open(target, function (status) {
                 if (status === 'success') {
                     app.get('analysis').forEach(function (script) {
@@ -46,15 +39,34 @@ var analyser = {
                             response.analysis[script.name] = result;
                             if (Object.keys(response.analysis).length === app.get('analysis').length) {
                                 logger.info('Processed ' + Object.keys(response) + ' for ' + target);
-                                page.close();
                                 response.status = {responseCode: targetResponseCode};
+                                page.close();
                                 callback(response);
                             }
                         });
                     });
+                } else {
+                    page.close();
+                    callback({analysis: {}, status: {responseCode: 404}});
                 }
             });
         });
+
+        function setup(page) {
+            page.set('onResourceReceived', function (resource) {
+                if (resource.url === target || resource.url === target + '/') {
+                    targetResponseCode = resource.status;
+                }
+            });
+
+            page.set('settings.resourceTimeout', 5000); // 5 seconds
+            page.set('onResourceTimeout', function (e) {
+                if (e.url === target || e.url === target + '/') {
+                    page.close();
+                    callback({analysis: {}, status: {responseCode: e.errorCode}});
+                }
+            });
+        }
     }
 };
 

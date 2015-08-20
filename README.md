@@ -1,13 +1,24 @@
-# pwd-analysis [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
-> Description
+# pwd-analysis [![Build Status][travis-image]][travis-url]
 
-## License
+## Step 1 – Install Node.js
+> Head on over to http://nodejs.org and click install – this should use magic to figure out what OS and version.
 
-Apache-2.0 © [Bartosz Galek]()
+## Step 2 – Install dependencies
+> Open command prompt – (run cmd) then type ‘npm install’ in repository folder – if there is no  error you’ve installed Node.js correctly yay!
+Otherwise make sure you close and reopen command prompt if it was open during install. Or try rebooting – reinstalling, the usual.
 
-[npm-image]: https://badge.fury.io/js/pwd-analysis.svg
-[npm-url]: https://npmjs.org/package/pwd-analysis
-[travis-image]: https://travis-ci.org/bgalek/pwd-analysis.svg?branch=master
-[travis-url]: https://travis-ci.org/bgalek/pwd-analysis
-[daviddm-image]: https://david-dm.org/bgalek/pwd-analysis.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/bgalek/pwd-analysis
+## Step 3 – Run
+To start application
+> npm start
+
+You can check it at:
+> https://localhost:5000/analysis?url=http://javers.org
+
+## Step 4 – Lint & Test
+> npm test
+
+If you cannot run tests, try installing gulp globally
+> npm install -g gulp
+
+[travis-image]: https://api.travis-ci.org/pwd-project/pwd-analysis.svg?branch=master
+[travis-url]: https://api.travis-ci.org/pwd-project/pwd-analysis

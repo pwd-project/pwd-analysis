@@ -2,7 +2,7 @@
   "name": "pwd-analysis",
   "version": "0.0.1",
   "description": "PWD Analysis module",
-  "repository": "pwd/pwd-analysis",
+  "repository": "pwd-project/pwd-analysis",
   "author": {
     "name": "Bartosz Galek",
     "email": "bartosz@galek.com.pl"

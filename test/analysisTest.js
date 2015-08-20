@@ -51,20 +51,6 @@ describe('pwd-analysis tests', function () {
         }
     });
 
-    it('should detect headers without content', function (done) {
-            //given
-            var altAnalysis = require('../app/analysis/headerContent.js');
-
-            //when
-            runAnalysis(altAnalysis, '/sites/withoutHeaderContent.html', check);
-
-            //then
-            function check(result) {
-                assert.deepEqual(result, {headers: 6, withoutContent: 3, score: 50});
-                done();
-            }
-        });
-
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

@@ -2,7 +2,7 @@
 
 module.exports = {
     name: 'headerContent',
-    description: 'Czy na stronie sπ nag≥Ûwki bez treúci?',
+    description: 'Czy na stronie sƒÖ nag≈Ç√≥wki bez tre≈õci?',
     run: function (page, callback) {
         page.evaluate(function () {
             var allHeaders = document.querySelectorAll('h1,h2,h3,h4,h5,h6').length;

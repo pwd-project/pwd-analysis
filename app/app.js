@@ -23,7 +23,7 @@ app.get('/analysis', function (req, resp) {
     logger.info('Received url to process', target);
 
     analyser.analyse(target, function (response) {
-        console.log("url processed, responseCode: "+ response.status.responseCode)
+        console.log('url processed, responseCode: ' + response.status.responseCode);
         resp.json(response);
         resp.end();
     });

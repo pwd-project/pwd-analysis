@@ -23,6 +23,7 @@ var analyser = {
     },
 
     analyse: function (target, callback) {
+        var isResponseSent = false;
         var self = this;
         var targetResponseCode;
         var response = {
@@ -42,12 +43,16 @@ var analyser = {
                                 response.status = {responseCode: targetResponseCode};
                                 page.close();
                                 callback(response);
+                                isResponseSent = true;
                             }
                         });
                     });
                 } else {
-                    page.close();
-                    callback({analysis: {}, status: {responseCode: 404}});
+                    if (!isResponseSent) {
+                        page.close();
+                        callback({analysis: {}, status: {responseCode: 404}});
+                        isResponseSent = true;
+                    }
                 }
             });
         });
@@ -62,8 +67,11 @@ var analyser = {
             page.set('settings.resourceTimeout', 5000); // 5 seconds
             page.set('onResourceTimeout', function (e) {
                 if (e.url === target || e.url === target + '/') {
-                    page.close();
-                    callback({analysis: {}, status: {responseCode: e.errorCode}});
+                    if (!isResponseSent) {
+                        page.close();
+                        callback({analysis: {}, status: {responseCode: e.errorCode}});
+                        isResponseSent = true;
+                    }
                 }
             });
         }

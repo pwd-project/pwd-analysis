@@ -12,7 +12,7 @@ To start application
 > npm start
 
 You can check it at:
-> https://localhost:5000/analysis?url=http://javers.org
+> http://localhost:5000/analysis?url=http://javers.org
 
 ## Step 4 – Lint & Test
 > npm test

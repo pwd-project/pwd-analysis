@@ -51,6 +51,20 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect Kontakt hyperlink', function (done) {
+        //given
+        var htmlContactAnalysis = require('../app/analysis/contact.js');
+
+        //when
+        runAnalysis(htmlContactAnalysis, 'sites/contact.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, address: 'http://bartoszyce.pl/urzad/kontakt/'});
+            done();
+        }
+    });
+
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

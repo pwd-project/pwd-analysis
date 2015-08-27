@@ -21,7 +21,9 @@ analyser.loadAnalysis('./analysis/');
 app.get('/analysis', function (req, resp) {
     var target = req.query.url;
     logger.info('Received url to process', target);
+
     analyser.analyse(target, function (response) {
+        console.log('url processed, responseCode: ' + response.status.responseCode);
         resp.json(response);
         resp.end();
     });

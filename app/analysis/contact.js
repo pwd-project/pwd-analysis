@@ -5,14 +5,15 @@ module.exports = {
     description: 'Czy na stronie jest odnosnik do strony z informacją kontaktowa ?',
     run: function (page, callback) {
         page.evaluate(function () {
-            allHypers = document.querySelectorAll('a');
+            var allHypers = document.querySelectorAll('a');
             var i;
-            var href = '';
+            var hrefText = '';
             for (i = 0; i < allHypers.length; i++) {
-              if ((allHypers[i] === 'Kontakt') && (allHypers[i].href !== ''))
-                href = allHypers[i].href;
+              if (allHypers[i].innerText === 'Kontakt' && allHypers[i].href !== '') {
+                hrefText = allHypers[i].href;
+              }
             }
-            return score;
+            return hrefText;
         }, function (href) {
             callback({
                 score: 100 * (href !== ''),

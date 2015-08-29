@@ -65,6 +65,20 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect cms tool', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/cms.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/cms.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, cms: 'Joomla'});
+            done();
+        }
+    });
+
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

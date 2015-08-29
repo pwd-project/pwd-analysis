@@ -7,30 +7,22 @@ module.exports = {
         page.evaluate(function () {
             var allMeta = document.querySelectorAll('meta[name="generator"]');
             var cmsName;
-            var n;
             if (allMeta.length === 1) {
               cmsName = allMeta[0].getAttribute('content');
-              n = cmsName.indexOf('Joomla');
-              if (n >= 0) {
+              if (cmsName.toLowerCase().indexOf('joomla') >= 0) {
                 cmsName = 'Joomla';
-              } else {
-                n = cmsName.indexOf('WordPress');
-                if (n >= 0) {
-                  cmsName = 'WordPress';
-                } else {
-                  n = cmsName.indexOf('Drupal');
-                  if (n >= 0) {
-                    cmsName = 'Drupal';
-                  } else {
-                    cmsName = 'Other';
-                  }
-                }
+              }
+              if (cmsName.toLowerCase().indexOf('wordpress') >= 0) {
+                cmsName = 'WordPress';
+              }
+              if (cmsName.toLowerCase().indexOf('drupal') >= 0) {
+                cmsName = 'Drupal';
               }
             }
             return cmsName;
         }, function (cmsName) {
             callback({
-                score: 100 * (cmsName !== ''),
+                score: 100,
                 cms: cmsName
             });
         });

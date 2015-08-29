@@ -8,10 +8,11 @@ module.exports = {
             var allHypers = document.querySelectorAll('a');
             var i;
             var hrefText = '';
+
             for (i = 0; i < allHypers.length; i++) {
-              if (allHypers[i].innerText === 'Kontakt' && allHypers[i].href !== '') {
+              if (allHypers[i].innerText.toLowerCase().indexOf('kontakt') >=0 && allHypers[i].href !== '') {
                 hrefText = allHypers[i].href;
-              }
+                      }
             }
             return hrefText;
         }, function (href) {

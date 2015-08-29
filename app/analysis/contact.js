@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    name: 'htmlLang',
+    name: 'contact',
     description: 'Czy na stronie jest odnosnik do strony z informacją kontaktowa ?',
     run: function (page, callback) {
         page.evaluate(function () {

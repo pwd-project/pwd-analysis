@@ -51,6 +51,118 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect Kontakt hyperlink', function (done) {
+        //given
+        var htmlContactAnalysis = require('../app/analysis/contact.js');
+
+        //when
+        runAnalysis(htmlContactAnalysis, 'sites/contact.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, address: 'http://bartoszyce.pl/urzad/kontakt/'});
+            done();
+        }
+    });
+
+    it('should no detect Kontakt hyperlink', function (done) {
+        //given
+        var htmlContactAnalysis = require('../app/analysis/contact.js');
+
+        //when
+        runAnalysis(htmlContactAnalysis, 'sites/contact_no.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 0, address: ''});
+            done();
+        }
+    });
+
+    it('should detect cms tool Joomla', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/cms.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/cms_joomla.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, cms: 'Joomla'});
+            done();
+        }
+    });
+
+    it('should detect cms tool Drupal', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/cms.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/cms_drupal.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, cms: 'Drupal'});
+            done();
+        }
+    });
+
+    it('should detect other cms tool', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/cms.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/cms_other.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, cms: 'Napisane w Javie'});
+            done();
+        }
+    });
+
+    it('should detect audio tag with autoplay', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/sound.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/sound.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 0,tag: 'audio'});
+            done();
+        }
+    });
+
+    it('should detect audio tag without autoplay', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/sound.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/sound_noauto.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100,tag: ''});
+            done();
+        }
+    });
+
+    it('should detect bgsound tag', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/sound.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/sound_bg.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 0,tag: 'bgsound'});
+            done();
+        }
+    });
+
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

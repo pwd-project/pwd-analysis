@@ -5,17 +5,12 @@ module.exports = {
     description: 'Czy na stronie uruchamia sie automatycznie dzwiek ?',
     run: function (page, callback) {
         page.evaluate(function () {
-            var allAudio;
-            var soundTag = '';
-            allAudio = document.querySelectorAll('audio[autoplay]');
-            if (allAudio.length > 0) {
-              soundTag = 'audio';
+            if (document.querySelectorAll('audio[autoplay]').length) {
+                return 'audio';
+            } else if (document.querySelectorAll('bgsound[src]').length) {
+                return 'bgsound';
             }
-            allAudio = document.querySelectorAll('bgsound[src]');
-            if (allAudio.length > 0) {
-              soundTag = 'bgsound';
-            }
-            return soundTag;
+            return '';
         }, function (soundTag) {
             callback({
                 score: 100 * (soundTag === ''),

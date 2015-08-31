@@ -15,7 +15,6 @@ module.exports = {
             };
         }, function (headers) {
             var headerCount = headers.allHeaders.length;
-            var headerWithChildrenCount = 0;
             var score = 100;
             if (headerCount > 0) {
                 if (headers.h1Count !== 1 || !headers.isH1First) {
@@ -23,7 +22,7 @@ module.exports = {
                 }
                 else {
                     score -= Math.round(40 * headers.emptyHeadersCount / headerCount);
-                    score -= Math.round(40 * headerWithChildrenCount / headerCount);
+                    score -= Math.round(40 * headers.headerWithChildrenCount / headerCount);
                 }
             }
             callback({

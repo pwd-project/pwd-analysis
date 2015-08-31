@@ -130,7 +130,7 @@ describe('pwd-analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 0,tag: 'audio'});
+            assert.deepEqual(result, {score: 0, tag: 'audio'});
             done();
         }
     });
@@ -144,7 +144,7 @@ describe('pwd-analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100,tag: ''});
+            assert.deepEqual(result, {score: 100, tag: ''});
             done();
         }
     });
@@ -158,24 +158,24 @@ describe('pwd-analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 0,tag: 'bgsound'});
+            assert.deepEqual(result, {score: 0, tag: 'bgsound'});
             done();
         }
     });
 
     it('should detect headers without content', function (done) {
         //given
-            var altAnalysis = require('../app/analysis/headerContent.js');
+        var altAnalysis = require('../app/analysis/headerContent.js');
 
-            //when
-            runAnalysis(altAnalysis, '/sites/withoutHeaderContent.html', check);
+        //when
+        runAnalysis(altAnalysis, '/sites/withoutHeaderContent.html', check);
 
-            //then
-            function check(result) {
-                assert.deepEqual(result, {allHeaders:6,h1Count:1,isH1First:true,emptyHeaders:2,headerWithChildren:1,score:80});
-                done();
-            }
-        });
+        //then
+        function check(result) {
+            assert.deepEqual(result, {allHeaders: 6, h1Count: 1, isH1First: true, emptyHeaders: 2, headerWithChildren: 1, score: 87});
+            done();
+        }
+    });
 
 
     function runAnalysis(analysis, filename, check) {

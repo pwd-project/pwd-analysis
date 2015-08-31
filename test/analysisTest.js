@@ -177,6 +177,20 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect formatting tags', function (done) {
+        //given
+        var altAnalysis = require('../app/analysis/formattingTags.js');
+
+        //when
+        runAnalysis(altAnalysis, 'sites/withFormattingTags.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {formattingTags: 5, allTags: 5, score: 0});
+            done();
+        }
+    });
+
 
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {

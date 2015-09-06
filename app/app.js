@@ -4,8 +4,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     cors = require('cors'),
     logger = require('winston'),
-    psi = require('psi'),
-    w3cjs = require('w3cjs');
+    psi = require('psi');
 
 var app = module.exports = express();
 
@@ -20,10 +19,10 @@ analyser.loadAnalysis('./analysis/');
 
 app.get('/analysis', function (req, resp) {
     var target = req.query.url;
-    logger.info('Received url to process', target);
+    logger.info('[' + target + '] ' + 'Received request to analysis process');
 
     analyser.analyse(target, function (response) {
-        console.log('url processed, responseCode: ' + response.status.responseCode);
+        logger.info('[' + target + '] ' + 'Processed, responseCode: ' + response.status.responseCode);
         resp.json(response);
         resp.end();
     });
@@ -31,7 +30,7 @@ app.get('/analysis', function (req, resp) {
 
 app.get('/metrics', function (req, resp) {
     var target = req.query.url;
-    logger.info('Received url for speed analysis', target);
+    logger.info('[' + target + '] ' + ' Received request for speed analysis');
     psi(target, function (err, data) {
         if (err) {
             resp.json(err);
@@ -39,19 +38,6 @@ app.get('/metrics', function (req, resp) {
             resp.json(data);
         }
         resp.end();
-    });
-});
-
-app.get('/validate', function (req, resp) {
-    var target = req.query.url;
-    logger.info('Received url for w3c analysis', target);
-    w3cjs.validate({
-        file: target,
-        output: 'json',
-        callback: function (res) {
-            resp.json(res);
-            resp.end();
-        }
     });
 });
 

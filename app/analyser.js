@@ -31,15 +31,22 @@ var analyser = {
             status: {}
         };
 
+        if (typeof phantomjs === 'undefined') {
+            logger.error('Phantom process not found');
+            callback('Phantom process not found');
+        }
+
         phantomjs.createPage(function (page) {
             setup(page);
             page.open(target, function (status) {
                 if (status === 'success') {
                     app.get('analysis').forEach(function (script) {
+                        script.started = Date.now();
                         self.runAnalysis(script, page, function (result) {
                             response.analysis[script.name] = result;
+                            logger.info('[' + target + '] ' + 'Processed ' + script.name + ' [' + (Date.now() - script.started) + ' ms]');
                             if (Object.keys(response.analysis).length === app.get('analysis').length) {
-                                logger.info('Processed ' + Object.keys(response) + ' for ' + target);
+                                logger.info('[' + target + '] ' + 'Finished processing');
                                 response.status = {responseCode: targetResponseCode};
                                 page.close();
                                 callback(response);

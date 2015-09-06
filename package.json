@@ -25,6 +25,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "accessibility-developer-tools": "git+https://github.com/GoogleChrome/accessibility-developer-tools.git",
     "body-parser": "^1.13.3",
     "cors": "^2.7.1",
     "express": "~4.9.x",

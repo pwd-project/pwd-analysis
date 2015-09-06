@@ -5,7 +5,7 @@ var app = require('./app'),
     logger = require('winston'),
     phantomjs;
 
-phantom.create(function (ph) {
+phantom.create({parameters: {'load-images': 'no', 'local-to-remote-url-access': 'yes'}}, function (ph) {
     phantomjs = ph;
 }, {dnodeOpts: {weak: false}});
 

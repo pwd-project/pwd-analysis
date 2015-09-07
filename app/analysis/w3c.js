@@ -12,7 +12,7 @@ module.exports = {
             output: 'json',
             callback: function (res) {
                 var messages = res.messages.map(function (message) {
-                    return message.type == 'error'
+                    return message.type === 'error';
                 });
                 callback({
                     score: Math.round(100 / messages.length)

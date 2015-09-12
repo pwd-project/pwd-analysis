@@ -2,15 +2,13 @@
 
 module.exports = {
     name: 'htmlLang',
-    description: 'Czy tag html ma ustawiony język',
     run: function (page, callback) {
-        page.evaluate(function () {
-            return document.querySelector('html').getAttribute('lang');
-        }, function (lang) {
-            callback({
+        return page.evaluate(function () {
+            var lang = document.querySelector('html').getAttribute('lang');
+            return {
                 score: 100 * (lang !== ''),
                 language: lang
-            });
-        });
+            };
+        }, callback);
     }
 };

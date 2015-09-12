@@ -10,7 +10,6 @@
   "files": [
     "app"
   ],
-  "main": "app/app.js",
   "keywords": [],
   "devDependencies": {
     "gulp": "^3.6.0",
@@ -25,15 +24,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "accessibility-developer-tools": "git+https://github.com/GoogleChrome/accessibility-developer-tools.git",
-    "body-parser": "^1.13.3",
-    "cors": "^2.7.1",
-    "express": "~4.9.x",
     "phantom": "^0.7.2",
-    "phantomjs": "^1.9.17",
-    "psi": "^1.0.6",
-    "request": "^2.60.0",
-    "w3cjs": "^0.3.0",
-    "winston": "^1.0.1"
+    "phantomjs": "^1.9.17"
   }
 }

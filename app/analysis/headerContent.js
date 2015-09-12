@@ -2,18 +2,21 @@
 
 module.exports = {
     name: 'headerContent',
-    description: 'Czy na stronie są nagłówki bez treści?',
     run: function (page, callback) {
-        page.evaluate(function () {
+        return page.evaluate(function () {
             var allHeaders = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
-            return {
+            if (allHeaders.length === 0) {
+                return {score: 0};
+            }
+
+            var headers = {
                 allHeaders: allHeaders,
                 h1Count: document.querySelectorAll('h1').length,
                 isH1First: allHeaders[0].nodeName === 'H1',
                 emptyHeadersCount: document.querySelectorAll('h1:empty,h2:empty,h3:empty,h4:empty,h5:empty,h6:empty').length,
                 headerWithChildrenCount: document.querySelectorAll('h1>*,h2>*,h3>*,h4>*,h5>*,h6>*').length
             };
-        }, function (headers) {
+
             var headerCount = headers.allHeaders.length;
             var score = 100;
             if (headerCount > 0) {
@@ -25,14 +28,15 @@ module.exports = {
                     score -= Math.round(40 * headers.headerWithChildrenCount / headerCount);
                 }
             }
-            callback({
+
+            return {
                 allHeaders: headers.allHeaders.length,
                 h1Count: headers.h1Count,
                 isH1First: headers.isH1First,
                 emptyHeaders: headers.emptyHeadersCount,
                 headerWithChildren: headers.headerWithChildrenCount,
                 score: score
-            });
-        });
+            };
+        }, callback);
     }
 };

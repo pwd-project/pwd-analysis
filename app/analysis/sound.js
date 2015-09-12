@@ -2,20 +2,20 @@
 
 module.exports = {
     name: 'sound',
-    description: 'Czy na stronie uruchamia sie automatycznie dzwiek ?',
     run: function (page, callback) {
-        page.evaluate(function () {
+        return page.evaluate(function () {
+            var soundTag;
             if (document.querySelectorAll('audio[autoplay]').length) {
-                return 'audio';
+                soundTag = 'audio';
             } else if (document.querySelectorAll('bgsound[src]').length) {
-                return 'bgsound';
+                soundTag = 'bgsound';
+            } else {
+                soundTag = '';
             }
-            return '';
-        }, function (soundTag) {
-            callback({
+            return {
                 score: 100 * (soundTag === ''),
                 tag: soundTag
-            });
-        });
+            };
+        }, callback);
     }
 };

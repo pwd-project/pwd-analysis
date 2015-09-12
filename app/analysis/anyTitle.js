@@ -2,15 +2,13 @@
 
 module.exports = {
     name: 'anyTitle',
-    description: 'Czy na stronie jest title?',
     run: function (page, callback) {
-        page.evaluate(function () {
-            return document.title;
-        }, function (title) {
-            callback({
+        return page.evaluate(function () {
+            var title = document.title;
+            return {
                 score: 100 * (title !== ''),
                 title: title
-            });
-        });
+            };
+        }, callback);
     }
 };

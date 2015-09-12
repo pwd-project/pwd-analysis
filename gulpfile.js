@@ -1,4 +1,5 @@
 'use strict';
+
 var gulp = require('gulp');
 var excludeGitignore = require('gulp-exclude-gitignore');
 var mocha = require('gulp-mocha');

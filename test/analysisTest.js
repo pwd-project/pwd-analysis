@@ -191,6 +191,20 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect big font settings', function (done) {
+        //given
+        var bigFontAnalysis = require('../app/analysis/bigFont.js');
+
+        //when
+        runAnalysis(bigFontAnalysis, '/sites/bigFont.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, href: 'X'});
+            done();
+        }
+    });
+
 
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {

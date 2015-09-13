@@ -19,7 +19,7 @@
     "jshint-stylish": "^1.0.0"
   },
   "scripts": {
-    "start": "node app/app.js",
+    "start": "phantomjs app/app.js",
     "test": "gulp"
   },
   "license": "Apache-2.0",

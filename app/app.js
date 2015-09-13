@@ -15,6 +15,10 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                 if (status === 'success') {
                     analyser.getAnalysis().forEach(function (analysis) {
                         results[analysis.name] = analysis.run(page);
+                        if (results[analysis.name] === null) {
+                            results[analysis.name] = {score: 0};
+                            console.log('metric [' + analysis.name + '] did not return a valid report, sending score 0');
+                        }
                     });
                     response.statusCode = 200;
                     response.write(JSON.stringify({analysis: results, status: {responseCode: 200}}));

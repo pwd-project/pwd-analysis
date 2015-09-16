@@ -1,8 +1,10 @@
+/*global phantom:false */
 'use strict';
 
 var server = require('webserver').create();
 var webPage = require('webpage');
 var analyser = require('./analyser.js');
+var requestCounter = 0;
 
 server.listen(require('system').env.PORT || 5000, function (request, response) {
     var target = getParameterByName(request.url, 'url');
@@ -33,6 +35,13 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                 }
             }
         );
+        requestCounter++;
+
+        //phantom is sometimes unstable, restart it every 300 req
+        if (requestCounter > 300) {
+            phantom.exit();
+        }
+
     }
 });
 

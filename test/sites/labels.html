@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Good: Labeled using aria-labelledby -->
+<div id="address_label">Enter your address</div>
+<input aria-labelledby="address_label">
+
+<!-- Good: Labeled using aria-label -->
+<input aria-label="Enter your address">
+
+<!-- Good: Using placeholder text -->
+<input placeholder="Enter your address">
+
+<!-- Good: using label/for= -->
+<label for="address">Enter your address</label>
+<input id="address">
+
+<!-- Good: using label-wrapped -->
+<!-- In this case both "Address:" and the contents of the text field will be read. -->
+<label>
+    Address:
+    <input>
+</label>
+
+<!-- Ok: using title attribute -->
+<input title="Enter your address">
+</body>
+</html>

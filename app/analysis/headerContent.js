@@ -24,8 +24,8 @@ module.exports = {
                     score = 0;
                 }
                 else {
-                    score -= Math.round(40 * headers.emptyHeadersCount / headerCount),40;
-                    score -= Math.round(40 * headers.headerWithChildrenCount / headerCount),40;
+                    score -= Math.round(40 * headers.emptyHeadersCount / headerCount);
+                    score -= Math.round(40 * headers.headerWithChildrenCount / headerCount);
                 }
             }
 

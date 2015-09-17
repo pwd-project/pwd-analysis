@@ -13,8 +13,8 @@ module.exports = {
                 allHeaders: allHeaders,
                 h1Count: document.querySelectorAll('h1').length,
                 isH1First: allHeaders[0].nodeName === 'H1',
-                emptyHeadersCount: document.querySelectorAll('h1:empty,h2:empty,h3:empty,h4:empty,h5:empty,h6:empty').length,
-                headerWithChildrenCount: document.querySelectorAll('h1>*,h2>*,h3>*,h4>*,h5>*,h6>*').length
+                emptyHeadersCount: Math.min(document.querySelectorAll('h1:empty,h2:empty,h3:empty,h4:empty,h5:empty,h6:empty').length,allHeaders.length),
+                headerWithChildrenCount: Math.min(document.querySelectorAll('h1>*,h2>*,h3>*,h4>*,h5>*,h6>*').length,allHeaders.length)
             };
 
             var headerCount = headers.allHeaders.length;
@@ -24,8 +24,8 @@ module.exports = {
                     score = 0;
                 }
                 else {
-                    score -= Math.round(40 * headers.emptyHeadersCount / headerCount);
-                    score -= Math.round(40 * headers.headerWithChildrenCount / headerCount);
+                    score -= Math.round(40 * headers.emptyHeadersCount / headerCount),40;
+                    score -= Math.round(40 * headers.headerWithChildrenCount / headerCount),40;
                 }
             }
 

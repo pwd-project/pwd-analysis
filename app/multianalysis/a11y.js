@@ -17,7 +17,7 @@ module.exports = {
                 });
 
                 var labels = axsResult.filter(function (metric) {
-                    return metric.rule.code === ' AX_TEXT_01';
+                    return metric.rule.code === 'AX_TEXT_01';
                 });
 
                 var result = [];

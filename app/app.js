@@ -15,6 +15,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
         page.open(target, function (status, error) {
                 var results = {};
                 if (status === 'success') {
+
                     analyser.getAnalysis().forEach(function (analysis) {
                         results[analysis.name] = analysis.run(page);
                         if (results[analysis.name] === null) {
@@ -22,6 +23,20 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                             console.log('metric [' + analysis.name + '] did not return a valid report, sending score 0');
                         }
                     });
+
+                    analyser.getMultiAnalysis().forEach(function (multiAnalysis) {
+                        var multiAnalysisResult = multiAnalysis.run(page);
+                        if (multiAnalysisResult === null || multiAnalysisResult.length === 0) {
+                            multiAnalysisResult = [];
+                            multiAnalysis.names.forEach(function (name) {
+                                multiAnalysisResult.push({score: 0});
+                            });
+                        }
+                        multiAnalysisResult.forEach(function (result, index) {
+                            results[multiAnalysis.names[index]] = result;
+                        });
+                    });
+
                     response.statusCode = 200;
                     response.write(JSON.stringify({analysis: results, status: {responseCode: 200}}));
                     response.close();

@@ -7,7 +7,7 @@ var phantom = require('phantom');
 var webpage;
 var phantomjs;
 
-describe('pwd-analysis tests', function () {
+describe('analysis tests', function () {
 
     it('should detect images without alt', function (done) {
         //given
@@ -191,6 +191,90 @@ describe('pwd-analysis tests', function () {
         }
     });
 
+    it('should detect valid contrast', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/contrast.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            assert.deepEqual(result[0], {score: 100});
+            done();
+        }
+    });
+
+
+    it('should detect invalid contrast', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/contrast_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            assert.deepEqual(result[0], {score: 0});
+            done();
+        }
+    });
+
+    it('should detect valid aria labels', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/aria.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            assert.deepEqual(result[1], {score: 100});
+            done();
+        }
+    });
+
+    it('should detect invalid aria labels', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/aria_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            assert.deepEqual(result[1], {score: 0});
+            done();
+        }
+    });
 
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {

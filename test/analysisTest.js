@@ -276,6 +276,48 @@ describe('analysis tests', function () {
         }
     });
 
+    it('should detect valid input labels', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/labels.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            assert.deepEqual(result[2], {score: 100});
+            done();
+        }
+    });
+
+    it('should detect invalid input and button labels', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/labels_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            assert.deepEqual(result[2], {score: 0});
+            done();
+        }
+    });
+
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Good: unstyled text will use the user agent stylesheet, which is likely to
+     be high contrast by default, or else be set by the user to a preferable
+     scheme. -->
+<p>Some text.</p>
+
+<!-- Good: light text on a dark background with a contrast ratio > 4.5 -->
+<style>
+    .code {
+        /** Contrast ratio 15.30:1 **/
+        color: lime;
+        background-color: black;
+        font-family: Monaco, 'Lucida Console', monospace;
+    }
+</style>
+<div class="code">static void int main()</div>
+</body>
+</html>

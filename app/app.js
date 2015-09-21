@@ -60,7 +60,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                 'Accept': 'application/vnd.heroku+json; version=3',
                 'Authorization': require('system').env.HEROKUAPI_AUTH
             };
-            actionPage.open(actionURL, 'POST', {}, function (status) {
+            actionPage.open(actionURL, 'DELETE', {}, function (status) {
                 console.log('restart dyno status: ' + status);
             });
         }

@@ -10,7 +10,7 @@ module.exports = {
             return {
                 images: allImages,
                 withoutAlt: withEmptyAlt + withoutAlt,
-                score: 100 - Math.round(100 * (withEmptyAlt + withoutAlt) / allImages) || 0
+                score: (allImages == 0)?100:(100 - Math.round(100 * (withEmptyAlt + withoutAlt) / allImages))
             };
         }, callback);
     }

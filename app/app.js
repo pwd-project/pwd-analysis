@@ -53,7 +53,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
         requestCounter++;
 
         //phantom is sometimes unstable, restart it every 300 req
-        if (requestCounter > 0) {
+        if (requestCounter > 300) {
             var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
             var actionPage = webPage.create();
             actionPage.customHeaders = {

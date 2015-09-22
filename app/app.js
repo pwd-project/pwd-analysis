@@ -53,12 +53,12 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
         requestCounter++;
 
         //phantom is sometimes unstable, restart it every 300 req
-        if (requestCounter > 300) {
+        if (requestCounter > 0) {
             var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
             var actionPage = webPage.create();
             actionPage.customHeaders = {
                 'Accept': 'application/vnd.heroku+json; version=3',
-                'Authorization': require('system').env.HEROKUAPI_AUTH
+                'Authorization': 'Basic ' + btoa(require('system').env.HEROKUAPI_AUTH)
             };
             actionPage.open(actionURL, 'DELETE', {}, function (status) {
                 console.log('restart dyno status: ' + status);

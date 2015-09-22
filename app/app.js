@@ -1,4 +1,4 @@
-/*global phantom:false */
+/*global phantom:true, btoa:true */
 'use strict';
 
 var server = require('webserver').create();
@@ -52,8 +52,8 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
         );
         requestCounter++;
 
-        //phantom is sometimes unstable, restart it every 300 req
-        if (requestCounter > 150) {
+        //phantom is sometimes unstable, restart it every 50 req
+        if (requestCounter > 50) {
             var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
             var actionPage = webPage.create();
             actionPage.customHeaders = {

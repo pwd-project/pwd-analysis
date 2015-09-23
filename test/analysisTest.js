@@ -493,7 +493,7 @@ describe('analysis tests', function () {
         //when
         phantomjs.createPage(function (page) {
             webpage = page;
-            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRoleRequiredAttrinbutes.html'), function () {
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRoleRequiredAttributes.html'), function () {
                 webpage.injectJs('app/libs/axs_testing.js', function () {
                     a11y.run(webpage, check);
                 });

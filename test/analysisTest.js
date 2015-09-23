@@ -507,27 +507,6 @@ describe('analysis tests', function () {
         }
     });
 
-    it('should detect lack of attributes required by ARIA role', function (done) {
-        //given
-        var a11y = require('../app/multianalysis/a11y.js');
-
-        //when
-        phantomjs.createPage(function (page) {
-            webpage = page;
-            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRoleRequiredAttributes_no.html'), function () {
-                webpage.injectJs('app/libs/axs_testing.js', function () {
-                    a11y.run(webpage, check);
-                });
-            });
-        });
-
-        //then
-        function check(result) {
-            assert.deepEqual(result[8], {score: 0});
-            done();
-        }
-    });
-
     it('should detect required owned elements', function (done) {
         //given
         var a11y = require('../app/multianalysis/a11y.js');

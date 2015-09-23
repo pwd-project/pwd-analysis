@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<!-- Good: the radiogroup role does support the aria-required property -->
-<ul role="radiogroup" aria-required="true" aria-labelledby="foo">
-    <li tabindex="-1" role="radio" aria-checked="false">Rainbow Trout</li>
-    <li tabindex="-1" role="radio" aria-checked="false">Brook Trout</li>
-    <li tabindex="0" role="radio" aria-checked="true">Lake Trout</li>
+<!-- Bad: the radio role does not support the aria-required property -->
+<ul role="radiogroup" aria-labelledby="foo">
+    <li aria-required="true" tabindex="-1" role="radio" aria-checked="false">Rainbow Trout</li>
+    <li aria-required="true" tabindex="-1" role="radio" aria-checked="false">Brook Trout</li>
+    <li aria-required="true" tabindex="0" role="radio" aria-checked="true">Lake Trout</li>
 </ul>
 </body>
 </html>

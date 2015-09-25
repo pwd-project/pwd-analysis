@@ -3,10 +3,10 @@
 var axs;
 
 module.exports = {
-    names: ['contrast', 'aria', 'labels', 'ariaRoleNotScoped', 'badAriaAttributeValue',
-            'badAriaRole', 'controlsWithoutLabel', 'duplicateId', 'multipleLabelableElementsPerLabel',
-            'nonExistentAriaRelatedElement', 'requiredAriaAttributeMissing', 'requiredOwnedAriaRoleMissing',
-            'unsupportedAriaAttribute'],
+    names: [ 'ariaRoleNotScoped', 'badAriaAttributeValue', 'aria', 'labels',
+             'duplicateId', 'contrast', 'multipleLabelableElementsPerLabel', 'nonExistentAriaRelatedElement',
+             'requiredAriaAttributeMissing', 'requiredOwnedAriaRoleMissing',
+                'unsupportedAriaAttribute'],
     run: function (page, callback) {
         page.injectJs('../app/libs/axs_testing.js');
         return page.evaluate(function () {

@@ -207,7 +207,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[0], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'lowContrastElements';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -229,7 +232,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[0], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'lowContrastElements';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -250,7 +256,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[1], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaRole';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -271,7 +280,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[1], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaRole';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -292,7 +304,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[2], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'controlsWithoutLabel';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -313,7 +328,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[2], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'controlsWithoutLabel';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -334,7 +352,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[3], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaRoleNotScoped';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -355,7 +376,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[3], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaRoleNotScoped';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -376,7 +400,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[4], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttributeValue';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -397,7 +424,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[4], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttributeValue';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -418,7 +448,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[5], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'duplicateId';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -439,7 +472,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[5], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'duplicateId';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -460,7 +496,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[7], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'nonExistentAriaRelatedElement';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -481,7 +520,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[7], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'nonExistentAriaRelatedElement';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -502,7 +544,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[8], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'requiredAriaAttributeMissing';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -523,7 +568,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[9], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'requiredOwnedAriaRoleMissing';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -544,7 +592,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[9], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'requiredOwnedAriaRoleMissing';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -565,7 +616,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[10], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'unsupportedAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -586,7 +640,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[10], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'unsupportedAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });

@@ -10,8 +10,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
     var target = getParameterByName(request.url, 'url');
     if (request.method === 'GET' && request.url.indexOf('/analysis') > -1 && target !== '') {
         var page = webPage.create();
-        page.settings.resourceTimeout = 10000;
-        page.settings.loadImages = false;
+        page.settings.resourceTimeout = 5000;
 
         page.open(target, function (status, error) {
                 var results = {};

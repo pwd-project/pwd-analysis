@@ -1,0 +1,7 @@
+<!-- Good: The combobox does not own the listbox in the DOM so aria-owns is used to represent this relationship -->
+<input type="text" role="combobox" aria-labelledby="foo" aria-owns="list1"/>
+<ul id="list1" aria-expanded="true" role="listbox">
+    <li role="option" tabindex="-1">Rainbow Trout</li>
+    <li role="option" tabindex="-1">Brook Trout</li>
+    <li role="option" tabindex="-1">Lake Trout</li>
+</ul>

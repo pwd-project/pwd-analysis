@@ -1,0 +1,10 @@
+<!-- Bad: list1 is owned by two comboboxes -->
+<input id="combo1" type="text" role="combobox" aria-labelledby="foo" aria-owns="list1"/>
+
+<input id="combo2" type="text" role="combobox" aria-labelledby="foo" aria-owns="list1"/>
+
+<ul id="list1" aria-expanded="true" role="listbox">
+    <li role="option" tabindex="-1">Rainbow Trout</li>
+    <li role="option" tabindex="-1">Brook Trout</li>
+    <li role="option" tabindex="-1">Lake Trout</li>
+</ul>

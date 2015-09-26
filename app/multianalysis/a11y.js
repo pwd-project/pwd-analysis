@@ -3,10 +3,10 @@
 var axs;
 
 module.exports = {
-    names: ['contrast', 'aria', 'labels', 'ariaRoleNotScoped', 'badAriaAttributeValue',
-            'badAriaRole', 'controlsWithoutLabel', 'duplicateId', 'multipleLabelableElementsPerLabel',
-            'nonExistentAriaRelatedElement', 'requiredAriaAttributeMissing', 'requiredOwnedAriaRoleMissing',
-            'unsupportedAriaAttribute'],
+    names: [ 'ariaRoleNotScoped', 'badAriaAttributeValue', 'aria', 'labels',
+             'duplicateId', 'contrast', 'multipleLabelableElementsPerLabel', 'nonExistentAriaRelatedElement',
+             'requiredAriaAttributeMissing', 'requiredOwnedAriaRoleMissing',
+                'unsupportedAriaAttribute'],
     run: function (page, callback) {
         page.injectJs('../app/libs/axs_testing.js');
         return page.evaluate(function () {
@@ -20,50 +20,6 @@ module.exports = {
                     return codes.indexOf(metric.rule.code)>=0;
                 });
 
-                /*var contrast = axsResult.filter(function (metric) {
-                                      return metric.rule.code === 'AX_COLOR_01';
-                                  });
-
-                var aria = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_01';
-                });
-
-                var labels = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_TEXT_01';
-                });
-
-                var ariaRoleNotScoped = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_09';
-                });
-
-                var badAriaAttributeValue = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_04';
-                });
-
-                var duplicateId = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_HTML_02';
-                });
-
-                var multipleLabelableElementsPerLabel = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_TEXT_03';
-                });
-
-                var nonExistentAriaRelatedElement = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_02';
-                });
-
-                var requiredAriaAttributeMissing = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_03';
-                });
-
-                var requiredOwnedAriaRoleMissing = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_08';
-                });
-
-                var unsupportedAriaAttribute = axsResult.filter(function (metric) {
-                    return metric.rule.code === 'AX_ARIA_10';
-                });
-*/
                 var result = [];
                 metrics.forEach(function(metric){
                     result.push({

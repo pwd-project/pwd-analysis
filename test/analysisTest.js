@@ -876,7 +876,7 @@ describe('analysis tests', function () {
 });
 
 before(function (done) {
-    this.timeout(15000);
+    this.timeout(5000);
     phantom.create(function (ph) {
         phantomjs = ph;
         done();

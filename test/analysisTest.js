@@ -648,6 +648,222 @@ describe('analysis tests', function () {
         }
     });
 
+    it('should detect if element supports ARIA roles, states and properties ', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOnReservedElement.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOnReservedElement';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect if element does not support ARIA roles, states and properties', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOnReservedElement_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOnReservedElement';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect whether aria-owns is not used if ownership is implicit in the DOM', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOwnsDescendant.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOwnsDescendant';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect whether aria-owns is used if ownership is implicit in the DOM', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOwnsDescendant_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOwnsDescendant';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if element has a valid ARIA attribute', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/badAriaAttribute.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect if element has an invalid ARIA attribute', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/badAriaAttribute_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if elements which are focusable are not invisible nor obscured by another element', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/focus.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'focusableElementNotVisibleAndNotAriaHidden';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect if elements which are focusable are either invisible or obscured by another element', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/focus_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'focusableElementNotVisibleAndNotAriaHidden';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if elements ID is not present in more than one aria-owns attribute at any time', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/multipleAriaOwners_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'multipleAriaOwners';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
     function runAnalysis(analysis, filename, check) {
         phantomjs.createPage(function (page) {
             webpage = page;

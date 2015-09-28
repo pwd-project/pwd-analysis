@@ -51,12 +51,6 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
             }
         );
         requestCounter++;
-
-        //phantom is sometimes unstable, restart it every 300 req
-        if (requestCounter > 300) {
-            phantom.exit();
-        }
-
     }
 });
 

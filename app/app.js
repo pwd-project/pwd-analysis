@@ -1,9 +1,11 @@
-/*global phantom:false */
+/*global phantom:true, btoa:true */
 'use strict';
 
 var server = require('webserver').create();
 var webPage = require('webpage');
 var analyser = require('./analyser.js');
+var process = require('child_process');
+var execFile = process.execFile;
 var requestCounter = 0;
 
 server.listen(require('system').env.PORT || 5000, function (request, response) {
@@ -51,6 +53,16 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
             }
         );
         requestCounter++;
+
+        //phantom is sometimes unstable, restart it every 100 req
+        if (requestCounter > 100) {
+            console.log('restarting dyno');
+            var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
+            execFile('curl', ['-I', '-X', 'DELETE', '-H', 'Accept: application/vnd.heroku+json; version=3', '--user', require('system').env.HEROKUAPI_AUTH, actionURL], null, function (err, stdout, stderr) {
+                console.log('execFileSTDOUT:', JSON.stringify(stdout));
+                console.log('execFileSTDERR:', JSON.stringify(stderr));
+            });
+        }
     }
 });
 

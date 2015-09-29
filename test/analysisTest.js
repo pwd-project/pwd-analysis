@@ -207,7 +207,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[0], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'lowContrastElements';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -229,7 +232,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[0], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'lowContrastElements';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -250,7 +256,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[1], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaRole';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -271,7 +280,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[1], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaRole';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });
@@ -292,7 +304,10 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[2], {score: 100});
+            var res = result.filter(function(r){
+                return r.originalName === 'controlsWithoutLabel';
+            });
+            assert.deepEqual(res[0].score, 100);
             done();
         }
     });
@@ -313,7 +328,538 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result[2], {score: 0});
+            var res = result.filter(function(r){
+                return r.originalName === 'controlsWithoutLabel';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect scoped aria roles', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRolesScoped.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaRoleNotScoped';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect invalid scope of aria roles', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRolesNotScoped.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaRoleNotScoped';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect valid aria role attributes', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRolesAttribute.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttributeValue';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect invalid aria role attributes', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRolesAttribute_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttributeValue';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect unique id in html elements', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/uniqueId.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'duplicateId';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect non unique id in html elements', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/uniqueId_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'duplicateId';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect existing DOM elements referred by ARIA attribute', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/labelExisting.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'nonExistentAriaRelatedElement';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect non existing DOM elements referred by ARIA attribute', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/labelExisting_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'nonExistentAriaRelatedElement';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect attributes required by ARIA role', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaRoleRequiredAttributes.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'requiredAriaAttributeMissing';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect required owned elements', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/requiredAriaRole.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'requiredOwnedAriaRoleMissing';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect missing required owned elements', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/requiredAriaRole_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'requiredOwnedAriaRoleMissing';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect supported ARIA attributes', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/supportedAriaAttributes.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'unsupportedAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect unsupported ARIA attributes', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/supportedAriaAttributes_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'unsupportedAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if element supports ARIA roles, states and properties ', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOnReservedElement.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOnReservedElement';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect if element does not support ARIA roles, states and properties', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOnReservedElement_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOnReservedElement';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect whether aria-owns is not used if ownership is implicit in the DOM', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOwnsDescendant.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOwnsDescendant';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect whether aria-owns is used if ownership is implicit in the DOM', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/ariaOwnsDescendant_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'ariaOwnsDescendant';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if element has a valid ARIA attribute', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/badAriaAttribute.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect if element has an invalid ARIA attribute', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/badAriaAttribute_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'badAriaAttribute';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if elements which are focusable are not invisible nor obscured by another element', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/focus.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'focusableElementNotVisibleAndNotAriaHidden';
+            });
+            assert.deepEqual(res[0].score, 100);
+            done();
+        }
+    });
+
+    it('should detect if elements which are focusable are either invisible or obscured by another element', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/focus_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'focusableElementNotVisibleAndNotAriaHidden';
+            });
+            assert.deepEqual(res[0].score, 0);
+            done();
+        }
+    });
+
+    it('should detect if elements ID is not present in more than one aria-owns attribute at any time', function (done) {
+        //given
+        var a11y = require('../app/multianalysis/a11y.js');
+
+        //when
+        phantomjs.createPage(function (page) {
+            webpage = page;
+            webpage.open('file:///' + path.join(__dirname, 'sites/multipleAriaOwners_no.html'), function () {
+                webpage.injectJs('app/libs/axs_testing.js', function () {
+                    a11y.run(webpage, check);
+                });
+            });
+        });
+
+        //then
+        function check(result) {
+            var res = result.filter(function(r){
+                return r.originalName === 'multipleAriaOwners';
+            });
+            assert.deepEqual(res[0].score, 0);
             done();
         }
     });

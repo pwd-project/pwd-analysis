@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Good: aria-labelledby element exists -->
+<div id="label-element">
+    Label for text input
+</div>
+<input type="text" aria-labelledby="label-element"></input>
+
+<!-- Good: aria-labelledby can refer to an element which is hidden from the page -->
+<div id="hidden-label-element" style="display: none">
+    Hidden label
+</div>
+<input type="text" aria-labelledby="hidden-label-element"></input>
+
+<!-- Good: aria-labelledby can take multiple values -->
+<div id="address">Address:</div>
+<span id="street">Street</span>
+<input type="text" aria-labelledby="address street"></input>
+<span id="city">City</span>
+<input type="text" aria-labelledby="address city"></input>
+</body>
+</html>

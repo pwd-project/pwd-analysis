@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Bad: the radiogroup role must own elements with role radio -->
+<ul role="radiogroup" aria-labelledby="foo">
+    <li id="radio1" tabindex="-1">Rainbow Trout</li>
+    <li id="radio2" tabindex="-1">Brook Trout</li>
+    <li id="radio3" tabindex="0">Lake Trout</li>
+</ul>
+</body>
+</html>

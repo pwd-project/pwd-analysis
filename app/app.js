@@ -4,6 +4,8 @@
 var server = require('webserver').create();
 var webPage = require('webpage');
 var analyser = require('./analyser.js');
+var process = require('child_process');
+var execFile = process.execFile;
 var requestCounter = 0;
 
 server.listen(require('system').env.PORT || 5000, function (request, response) {
@@ -54,15 +56,11 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
 
         //phantom is sometimes unstable, restart it every 50 req
         if (requestCounter > 50) {
+            console.log('restarting dyno');
             var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
-            var actionPage = webPage.create();
-            actionPage.customHeaders = {
-                'Accept': 'application/vnd.heroku+json; version=3',
-                'Authorization': 'Basic ' + btoa(require('system').env.HEROKUAPI_AUTH)
-            };
-            actionPage.open(actionURL, 'DELETE', {}, function (status) {
-                console.log('restart dyno status: ' + status);
-                phantom.exit();
+            execFile('curl', ['-I', '-X', 'DELETE', '-H', 'Accept: application/vnd.heroku+json; version=3', '--user', require('system').env.HEROKUAPI_AUTH, actionURL], null, function (err, stdout, stderr) {
+                console.log('execFileSTDOUT:', JSON.stringify(stdout));
+                console.log('execFileSTDERR:', JSON.stringify(stderr));
             });
         }
     }

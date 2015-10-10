@@ -13,6 +13,12 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
     if (request.method === 'GET' && request.url.indexOf('/analysis') > -1 && target !== '') {
         var page = webPage.create();
         page.settings.resourceTimeout = 5000;
+        page.settings.loadImages = false;
+
+        page.onResourceError = function(resourceError) {
+            console.log('onResourceError: (#' + resourceError.id + ' URL:' + resourceError.url + ')');
+            console.log('Error code: ' + resourceError.errorCode + '. Description: ' + resourceError.errorString);
+        };
 
         page.open(target, function (status, error) {
                 var results = {};
@@ -44,6 +50,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                     response.close();
                     page.close();
                 } else {
+                    console.log('URL [' + target + '] got bad status [' + status + ']');
                     analyser.getAnalysis().forEach(function (analysis) {
                         results[analysis.name] = {score: 0};
                     });

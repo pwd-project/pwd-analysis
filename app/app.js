@@ -12,7 +12,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
     var target = getParameterByName(request.url, 'url');
     if (request.method === 'GET' && request.url.indexOf('/analysis') > -1 && target !== '') {
         var page = webPage.create();
-        page.settings.resourceTimeout = 5000;
+        page.settings.resourceTimeout = 8000;
 
         page.open(target, function (status, error) {
                 var results = {};
@@ -49,13 +49,14 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                     });
                     response.write(JSON.stringify({analysis: results, status: {responseCode: 408}}));
                     response.close();
+                    page.close();
                 }
             }
         );
         requestCounter++;
 
         //phantom is sometimes unstable, restart it every 100 req
-        if (requestCounter > 100) {
+        if (requestCounter > 150) {
             console.log('restarting dyno');
             var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
             execFile('curl', ['-I', '-X', 'DELETE', '-H', 'Accept: application/vnd.heroku+json; version=3', '--user', require('system').env.HEROKUAPI_AUTH, actionURL], null, function (err, stdout, stderr) {

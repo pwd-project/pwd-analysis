@@ -55,6 +55,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                     response.write(JSON.stringify({analysis: results, status: {responseCode: 200}}));
                     response.close();
                     page.close();
+                    page = null;
                 } else {
                     analyser.getAnalysis().forEach(function (analysis) {
                         results[analysis.name] = {score: 0};
@@ -62,6 +63,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
                     response.write(JSON.stringify({analysis: results, status: {responseCode: 408}}));
                     response.close();
                     page.close();
+                    page = null;
                 }
             }
         );

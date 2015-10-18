@@ -10,9 +10,21 @@ var requestCounter = 0;
 
 server.listen(require('system').env.PORT || 5000, function (request, response) {
     var target = getParameterByName(request.url, 'url');
+
     if (request.method === 'GET' && request.url.indexOf('/analysis') > -1 && target !== '') {
         var page = webPage.create();
         page.settings.resourceTimeout = 8000;
+
+        page.onError = function (msg, trace) {
+            var msgStack = ['ERROR: ' + msg];
+            if (trace && trace.length) {
+                msgStack.push('TRACE:');
+                trace.forEach(function (t) {
+                    msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function + '")' : ''));
+                });
+            }
+            console.error(msgStack.join('\n'));
+        };
 
         page.open(target, function (status, error) {
                 var results = {};
@@ -57,15 +69,19 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
 
         //phantom is sometimes unstable, restart it every 100 req
         if (requestCounter > 50) {
-            console.log('restarting dyno');
-            var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
-            execFile('curl', ['-I', '-X', 'DELETE', '-H', 'Accept: application/vnd.heroku+json; version=3', '--user', require('system').env.HEROKUAPI_AUTH, actionURL], null, function (err, stdout, stderr) {
-                console.log('execFileSTDOUT:', JSON.stringify(stdout));
-                console.log('execFileSTDERR:', JSON.stringify(stderr));
-            });
+            restart();
         }
     }
 });
+
+function restart() {
+    console.log('restarting dyno');
+    var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
+    execFile('curl', ['-I', '-X', 'DELETE', '-H', 'Accept: application/vnd.heroku+json; version=3', '--user', require('system').env.HEROKUAPI_AUTH, actionURL], null, function (err, stdout, stderr) {
+        console.log('execFileSTDOUT:', JSON.stringify(stdout));
+        console.log('execFileSTDERR:', JSON.stringify(stderr));
+    });
+}
 
 function getParameterByName(url, name) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');

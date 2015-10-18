@@ -56,7 +56,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
         requestCounter++;
 
         //phantom is sometimes unstable, restart it every 100 req
-        if (requestCounter > 150) {
+        if (requestCounter > 50) {
             console.log('restarting dyno');
             var actionURL = 'https://api.heroku.com/apps/pwd-analysis/dynos';
             execFile('curl', ['-I', '-X', 'DELETE', '-H', 'Accept: application/vnd.heroku+json; version=3', '--user', require('system').env.HEROKUAPI_AUTH, actionURL], null, function (err, stdout, stderr) {

@@ -9,13 +9,13 @@ module.exports = {
             if (allMeta.length === 1) {
                 cmsName = allMeta[0].getAttribute('content');
                 if (cmsName.toLowerCase().indexOf('joomla') >= 0) {
-                    cmsName = 'Joomla';
+                    cmsName = 'joomla';
                 }
                 if (cmsName.toLowerCase().indexOf('wordpress') >= 0) {
-                    cmsName = 'WordPress';
+                    cmsName = 'wordpress';
                 }
                 if (cmsName.toLowerCase().indexOf('drupal') >= 0) {
-                    cmsName = 'Drupal';
+                    cmsName = 'drupal';
                 }
             }
             return {

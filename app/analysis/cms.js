@@ -4,8 +4,9 @@ module.exports = {
     name: 'cms',
     run: function (page, callback) {
         return page.evaluate(function () {
-            var cmsName;
             var allMeta = document.querySelectorAll('meta[name="generator"]');
+            var generator;
+            var cmsName;
             if (allMeta.length === 1) {
                 generator = allMeta[0].getAttribute('content');
                 cmsName = '';

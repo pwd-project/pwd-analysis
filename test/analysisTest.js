@@ -88,7 +88,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100, cms: 'Joomla'});
+            assert.deepEqual(result, {score: 100, cms: 'joomla'});
             done();
         }
     });
@@ -102,7 +102,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100, cms: 'Drupal'});
+            assert.deepEqual(result, {score: 100, cms: 'drupal'});
             done();
         }
     });
@@ -116,7 +116,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100, cms: 'Napisane w Javie'});
+            assert.deepEqual(result, {score: 100, cms: ''});
             done();
         }
     });

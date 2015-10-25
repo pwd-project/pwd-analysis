@@ -7,14 +7,15 @@ module.exports = {
             var cmsName;
             var allMeta = document.querySelectorAll('meta[name="generator"]');
             if (allMeta.length === 1) {
-                cmsName = allMeta[0].getAttribute('content');
-                if (cmsName.toLowerCase().indexOf('joomla') >= 0) {
+                generator = allMeta[0].getAttribute('content');
+                cmsName = '';
+                if (generator.toLowerCase().indexOf('joomla') >= 0) {
                     cmsName = 'joomla';
                 }
-                if (cmsName.toLowerCase().indexOf('wordpress') >= 0) {
+                if (generator.toLowerCase().indexOf('wordpress') >= 0) {
                     cmsName = 'wordpress';
                 }
-                if (cmsName.toLowerCase().indexOf('drupal') >= 0) {
+                if (generator.toLowerCase().indexOf('drupal') >= 0) {
                     cmsName = 'drupal';
                 }
             }

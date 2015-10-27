@@ -88,7 +88,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100, cms: 'joomla'});
+            assert.deepEqual(result, {score: 100, cms: 'Joomla'});
             done();
         }
     });
@@ -102,7 +102,21 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100, cms: 'drupal'});
+            assert.deepEqual(result, {score: 100, cms: 'Drupal'});
+            done();
+        }
+    });
+
+    it('should detect cms tool Thea', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/cms.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/cms_thea.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, cms: 'Thea'});
             done();
         }
     });

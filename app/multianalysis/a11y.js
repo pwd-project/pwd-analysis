@@ -26,7 +26,7 @@ module.exports = {
                 var result = [];
                 metrics.forEach(function(metric){
                     result.push({
-                            score: (metric.result != 'NA')?(metric.result !== 'FAIL') * 100:-1,
+                            score: (metric.result !== 'NA')?(metric.result !== 'FAIL') * 100:-1,
                             originalName: metric.rule.name
                         }
                     );

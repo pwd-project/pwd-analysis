@@ -6,10 +6,9 @@ module.exports = {
         return page.evaluate(function () {
             var allMeta = document.querySelectorAll('meta[name="generator"]');
             var generator;
-            var cmsName;
+            var cmsName = '';
             if (allMeta.length === 1) {
                 generator = allMeta[0].getAttribute('content');
-                cmsName = '';
                 if (generator.toLowerCase().indexOf('joomla') >= 0) {
                     cmsName = 'Joomla';
                 }
@@ -22,6 +21,11 @@ module.exports = {
             } else {
               if (document.querySelectorAll('a[href="http://cmsthea.pl"]').length > 0) {
                 cmsName = 'Thea';
+              } else {
+                allMeta = document.querySelectorAll('div[class="padWrap"]');
+                if (allMeta.length > 0) {
+                    cmsName = 'PAD';
+                }
               }
             }
             return {

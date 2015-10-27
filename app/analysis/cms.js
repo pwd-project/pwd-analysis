@@ -11,14 +11,18 @@ module.exports = {
                 generator = allMeta[0].getAttribute('content');
                 cmsName = '';
                 if (generator.toLowerCase().indexOf('joomla') >= 0) {
-                    cmsName = 'joomla';
+                    cmsName = 'Joomla';
                 }
                 if (generator.toLowerCase().indexOf('wordpress') >= 0) {
-                    cmsName = 'wordpress';
+                    cmsName = 'WordPress';
                 }
                 if (generator.toLowerCase().indexOf('drupal') >= 0) {
-                    cmsName = 'drupal';
+                    cmsName = 'Drupal';
                 }
+            } else {
+              if (document.querySelectorAll('a[href="http://cmsthea.pl"]').length > 0) {
+                cmsName = 'Thea';
+              }
             }
             return {
                 score: 100,

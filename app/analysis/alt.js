@@ -10,7 +10,7 @@ module.exports = {
             var withHTMLAlt = document.querySelectorAll('img[alt*="<"]').length;
             return {
                 images: allImages,
-                withoutAlt: withEmptyAlt + withoutAlt + withHTMLAlt,
+                withoutAlt: withImproperAlt + withoutAlt + withHTMLAlt,
                 score: (allImages === 0)?100:(100 - Math.round(100 * (withImproperAlt + withoutAlt + withHTMLAlt) / allImages))
             };
         }, callback);

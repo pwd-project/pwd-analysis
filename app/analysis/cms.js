@@ -4,19 +4,29 @@ module.exports = {
     name: 'cms',
     run: function (page, callback) {
         return page.evaluate(function () {
-            var cmsName;
             var allMeta = document.querySelectorAll('meta[name="generator"]');
+            var generator;
+            var cmsName = '';
             if (allMeta.length === 1) {
-                cmsName = allMeta[0].getAttribute('content');
-                if (cmsName.toLowerCase().indexOf('joomla') >= 0) {
+                generator = allMeta[0].getAttribute('content');
+                if (generator.toLowerCase().indexOf('joomla') >= 0) {
                     cmsName = 'Joomla';
                 }
-                if (cmsName.toLowerCase().indexOf('wordpress') >= 0) {
+                if (generator.toLowerCase().indexOf('wordpress') >= 0) {
                     cmsName = 'WordPress';
                 }
-                if (cmsName.toLowerCase().indexOf('drupal') >= 0) {
+                if (generator.toLowerCase().indexOf('drupal') >= 0) {
                     cmsName = 'Drupal';
                 }
+            } else {
+              if (document.querySelectorAll('a[href="http://cmsthea.pl"]').length > 0) {
+                cmsName = 'Thea';
+              } else {
+                allMeta = document.querySelectorAll('div[class="padWrap"]');
+                if (allMeta.length > 0) {
+                    cmsName = 'PAD';
+                }
+              }
             }
             return {
                 score: 100,

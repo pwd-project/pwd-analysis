@@ -107,6 +107,20 @@ describe('analysis tests', function () {
         }
     });
 
+    it('should detect cms tool Thea', function (done) {
+        //given
+        var htmlCmsAnalysis = require('../app/analysis/cms.js');
+
+        //when
+        runAnalysis(htmlCmsAnalysis, 'sites/cms_thea.html', check);
+
+        //then
+        function check(result) {
+            assert.deepEqual(result, {score: 100, cms: 'Thea'});
+            done();
+        }
+    });
+
     it('should detect other cms tool', function (done) {
         //given
         var htmlCmsAnalysis = require('../app/analysis/cms.js');
@@ -116,7 +130,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {score: 100, cms: 'Napisane w Javie'});
+            assert.deepEqual(result, {score: 100, cms: ''});
             done();
         }
     });

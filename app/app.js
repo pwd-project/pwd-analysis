@@ -70,7 +70,7 @@ server.listen(require('system').env.PORT || 5000, function (request, response) {
         requestCounter++;
 
         //phantom is sometimes unstable, restart it every 100 req
-        if (requestCounter > 50) {
+        if (requestCounter > 20) {
             restart();
         }
     }

@@ -186,7 +186,14 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            assert.deepEqual(result, {allHeaders: 6, h1Count: 1, isH1First: true, emptyHeaders: 2, headerWithChildren: 1, score: 80});
+            assert.deepEqual(result, {
+                allHeaders: 6,
+                h1Count: 1,
+                isH1First: true,
+                emptyHeaders: 2,
+                headerWithChildren: 1,
+                score: 80
+            });
             done();
         }
     });
@@ -221,7 +228,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'lowContrastElements';
             });
             assert.deepEqual(res[0].score, 100);
@@ -246,7 +253,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'lowContrastElements';
             });
             assert.deepEqual(res[0].score, 0);
@@ -270,7 +277,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'badAriaRole';
             });
             assert.deepEqual(res[0].score, 100);
@@ -294,7 +301,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'badAriaRole';
             });
             assert.deepEqual(res[0].score, 0);
@@ -318,7 +325,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'controlsWithoutLabel';
             });
             assert.deepEqual(res[0].score, 100);
@@ -342,7 +349,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'controlsWithoutLabel';
             });
             assert.deepEqual(res[0].score, 0);
@@ -366,7 +373,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'ariaRoleNotScoped';
             });
             assert.deepEqual(res[0].score, 100);
@@ -390,7 +397,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'ariaRoleNotScoped';
             });
             assert.deepEqual(res[0].score, 0);
@@ -414,7 +421,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'badAriaAttributeValue';
             });
             assert.deepEqual(res[0].score, 100);
@@ -438,7 +445,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'badAriaAttributeValue';
             });
             assert.deepEqual(res[0].score, 0);
@@ -462,7 +469,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'duplicateId';
             });
             assert.deepEqual(res[0].score, 100);
@@ -486,7 +493,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'duplicateId';
             });
             assert.deepEqual(res[0].score, 0);
@@ -510,7 +517,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'nonExistentAriaRelatedElement';
             });
             assert.deepEqual(res[0].score, 100);
@@ -534,7 +541,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'nonExistentAriaRelatedElement';
             });
             assert.deepEqual(res[0].score, 0);
@@ -558,7 +565,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'requiredAriaAttributeMissing';
             });
             assert.deepEqual(res[0].score, 100);
@@ -582,7 +589,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'requiredOwnedAriaRoleMissing';
             });
             assert.deepEqual(res[0].score, 100);
@@ -606,7 +613,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'requiredOwnedAriaRoleMissing';
             });
             assert.deepEqual(res[0].score, 0);
@@ -630,7 +637,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'unsupportedAriaAttribute';
             });
             assert.deepEqual(res[0].score, 100);
@@ -654,7 +661,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'unsupportedAriaAttribute';
             });
             assert.deepEqual(res[0].score, 0);
@@ -678,7 +685,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'ariaOnReservedElement';
             });
             assert.deepEqual(res[0].score, 100);
@@ -702,7 +709,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'ariaOnReservedElement';
             });
             assert.deepEqual(res[0].score, 0);
@@ -726,7 +733,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'ariaOwnsDescendant';
             });
             assert.deepEqual(res[0].score, 100);
@@ -750,7 +757,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'ariaOwnsDescendant';
             });
             assert.deepEqual(res[0].score, 0);
@@ -774,7 +781,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'badAriaAttribute';
             });
             assert.deepEqual(res[0].score, 100);
@@ -798,7 +805,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'badAriaAttribute';
             });
             assert.deepEqual(res[0].score, 0);
@@ -822,7 +829,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'focusableElementNotVisibleAndNotAriaHidden';
             });
             assert.deepEqual(res[0].score, 100);
@@ -846,7 +853,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'focusableElementNotVisibleAndNotAriaHidden';
             });
             assert.deepEqual(res[0].score, 0);
@@ -870,7 +877,7 @@ describe('analysis tests', function () {
 
         //then
         function check(result) {
-            var res = result.filter(function(r){
+            var res = result.filter(function (r) {
                 return r.originalName === 'multipleAriaOwners';
             });
             assert.deepEqual(res[0].score, 0);

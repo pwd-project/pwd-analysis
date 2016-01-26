@@ -4,13 +4,9 @@ module.exports = {
     name: 'bigFont',
     run: function (page, callback) {
         return page.evaluate(function () {
-            var elem = document.querySelector('a[title*="cionka du"],a[title*="ksza wielko"],a[title*="ksz wielko"],a[id="fontInc"],a[id="inc_font"],a[onClick*="FontSize"],a[class="big-font"],a[class*="resize"],span[title*="ksz tekst"]');
-            var href = elem;
+            var href = document.querySelector('a[title*="cionka du"],a[title*="ksza wielko"],a[id="fontInc"],a[id="inc_font"],a[onClick*="FontSize"],a[class="big-font"],span[title*="ksz tekst"]');
             if (href !== null) {
-                href = elem.getAttribute('href');
-                if (href === null) {
-                    href = elem.getAttribute('class');
-                }
+                href = href.getAttribute('href');
             }
             return {
                 score: 100 * (href !== '') * (href !== null),

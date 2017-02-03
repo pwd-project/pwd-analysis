@@ -25,6 +25,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "phantom": "^0.7.2",
-    "phantomjs": "^1.9.17"
+    "phantomjs": "^2.1.1"
   }
 }

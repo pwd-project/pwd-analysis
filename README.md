@@ -1,11 +1,11 @@
 # pwd-analysis [![Build Status][travis-image]][travis-url]
 
-## Step 1 – Install Phantomjs 2.0
-> Head on over to http://phantomjs.org/download.html and install PhantomJs
+## Step 1 – Install deps [Node > 7.0 needed]
+> npm i
 
 ## Step 2 – Run
 To start application
-> phantomjs app/app.js
+> node run start
 
 You can check it at:
 > http://localhost:5000/analysis?url=http://javers.org

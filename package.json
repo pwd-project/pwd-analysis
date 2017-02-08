@@ -1,6 +1,6 @@
 {
   "name": "pwd-analysis",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "PWD Analysis module",
   "repository": "pwd-project/pwd-analysis",
   "author": {
@@ -19,12 +19,14 @@
     "jshint-stylish": "^1.0.0"
   },
   "scripts": {
-    "start": "phantomjs app/app.js",
+    "start": "node --harmony-async-await app/app.js",
     "test": "gulp"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "phantom": "^0.7.2",
-    "phantomjs": "^1.9.17"
+    "axios": "^0.15.3",
+    "express": "^4.14.1",
+    "phantom": "^4.0.0",
+    "phantom-pool": "^1.2.0"
   }
 }

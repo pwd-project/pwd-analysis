@@ -2,7 +2,7 @@
 
 module.exports = {
     name: 'cms',
-    run: function (page, callback) {
+    run: (page) => {
         return page.evaluate(function () {
             var allMeta = document.querySelectorAll('meta[name="generator"]');
             var generator;
@@ -19,19 +19,19 @@ module.exports = {
                     cmsName = 'Drupal';
                 }
             } else {
-              if (document.querySelectorAll('a[href="http://cmsthea.pl"]').length > 0) {
-                cmsName = 'Thea';
-              } else {
-                allMeta = document.querySelectorAll('div[class="padWrap"]');
-                if (allMeta.length > 0) {
-                    cmsName = 'PAD';
+                if (document.querySelectorAll('a[href="http://cmsthea.pl"]').length > 0) {
+                    cmsName = 'Thea';
+                } else {
+                    allMeta = document.querySelectorAll('div[class="padWrap"]');
+                    if (allMeta.length > 0) {
+                        cmsName = 'PAD';
+                    }
                 }
-              }
             }
             return {
                 score: 100,
                 cms: cmsName
             };
-        }, callback);
+        });
     }
 };

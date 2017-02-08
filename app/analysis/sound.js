@@ -2,7 +2,7 @@
 
 module.exports = {
     name: 'sound',
-    run: function (page, callback) {
+    run: function (page) {
         return page.evaluate(function () {
             var soundTag;
             if (document.querySelectorAll('audio[autoplay]').length) {
@@ -16,6 +16,6 @@ module.exports = {
                 score: 100 * (soundTag === ''),
                 tag: soundTag
             };
-        }, callback);
+        });
     }
 };

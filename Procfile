@@ -1,1 +1,1 @@
-web: phantomjs app/app.js
+web: node --harmony-async-await app/app.js

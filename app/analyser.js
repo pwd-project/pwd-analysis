@@ -1,33 +1,29 @@
 'use strict';
+const fs = require('fs');
+const ANALYSIS_PATH = './app/analysis/';
+const MULTIANALYSIS_PATH = './app/multianalysis/';
 
-var fs = require('fs');
-
-var analyses = [];
-
-var analysisPath = './app/analysis/';
-var list = fs.list(analysisPath);
-for (var x = 0; x < list.length; x++) {
-    var file = analysisPath + list[x];
-    if (fs.isFile(file)) {
-        analyses.push(require('.' + file));
+module.exports = class Analyser {
+    constructor() {
+        fs.readdir(ANALYSIS_PATH, (err, items) => {
+            if (err) throw new err;
+            this._analyses = items.map(it => ANALYSIS_PATH + it)
+                .filter(it => fs.statSync(it).isFile(it))
+                .map(file => require('.' + file));
+        });
+        fs.readdir(MULTIANALYSIS_PATH, (err, items) => {
+            if (err) throw new err;
+            this._multiAnalyses = items.map(it => MULTIANALYSIS_PATH + it)
+                .filter(it => fs.statSync(it).isFile())
+                .map(file => require('.' + file));
+        });
     }
-}
 
-var multiAnalyses = [];
-var multiAnalysisPath = './app/multianalysis/';
-var list = fs.list(multiAnalysisPath);
-for (var x = 0; x < list.length; x++) {
-    var file = multiAnalysisPath + list[x];
-    if (fs.isFile(file)) {
-        multiAnalyses.push(require('.' + file));
+    get analyses() {
+        return this._analyses;
     }
-}
 
-module.exports = {
-    getAnalysis: function () {
-        return analyses;
-    },
-    getMultiAnalysis: function () {
-        return multiAnalyses;
+    get multiAnalyses() {
+        return this._multiAnalyses;
     }
 };

@@ -2,11 +2,10 @@
 
 module.exports = {
     name: 'contact',
-    run: function (page, callback) {
+    run: (page) => {
         return page.evaluate(function () {
             var allHyperlinks = document.querySelectorAll('a:not([href=""])');
             var href = getFirstContactLink();
-
             function getFirstContactLink() {
                 for (var i = 0; i < allHyperlinks.length; i++) {
                     if (allHyperlinks[i].innerText.toLowerCase().indexOf('kontakt') >= 0) {
@@ -15,11 +14,10 @@ module.exports = {
                 }
                 return '';
             }
-
             return {
                 score: 100 * (href !== ''),
                 address: href
             };
-        }, callback);
+        });
     }
 };

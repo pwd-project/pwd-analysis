@@ -18,6 +18,9 @@
     "gulp-mocha": "^2.0.0",
     "jshint-stylish": "^1.0.0"
   },
+  "engines": {
+    "node": "7.5.0"
+  },
   "scripts": {
     "start": "node --harmony-async-await app/app.js",
     "test": "gulp"

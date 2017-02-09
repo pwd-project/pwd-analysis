@@ -32,12 +32,15 @@ app.get('/analysis', function (req, res) {
                 return multiAnalysis.run(page)
                     .then((result) => {
                         return result.map(singleResult => {
-                            return {name: singleResult.originalName, result: {score: singleResult.score}}
+                            return {
+                                name: singleResult.originalName,
+                                result: {originalName: singleResult.originalName, score: singleResult.score}
+                            }
                         });
                     }).catch((err) => {
                         console.log('metric a11y did not return a valid report, sending score 0', err);
                         return multiAnalysis.names.map((it) => {
-                            return {name: it, result: {score: 0}}
+                            return {name: it, result: {originalName: it, score: 0}}
                         });
                     });
             });

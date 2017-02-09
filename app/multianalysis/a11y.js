@@ -3,8 +3,8 @@ var axs;
 
 module.exports = {
     names: ['ariaOnReservedElement', 'ariaOwnsDescendant', 'ariaRoleNotScoped', 'audioWithoutControls', 'badAriaAttribute',
-        'badAriaAttributeValue', 'aria', 'labels', 'duplicateId', 'focusableElementNotVisibleAndNotAriaHidden', 'linkWithUnclearPurpose',
-        'contrast', 'mainRoleOnInappropriateElement', 'elementsWithMeaningfulBackgroundImage', 'multipleAriaOwners',
+        'badAriaAttributeValue', 'badAriaRole', 'controlsWithoutLabel', 'duplicateId', 'focusableElementNotVisibleAndNotAriaHidden', 'linkWithUnclearPurpose',
+        'lowContrastElements', 'mainRoleOnInappropriateElement', 'elementsWithMeaningfulBackgroundImage', 'multipleAriaOwners',
         'multipleLabelableElementsPerLabel', 'nonExistentAriaRelatedElement', 'requiredAriaAttributeMissing',
         'requiredOwnedAriaRoleMissing', 'unsupportedAriaAttribute'],
 

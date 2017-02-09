@@ -37,7 +37,7 @@ app.get('/analysis', function (req, res) {
                     }).catch((err) => {
                         console.log('metric a11y did not return a valid report, sending score 0', err);
                         return multiAnalysis.names.map((it) => {
-                            return {name: it, score: 0}
+                            return {name: it, result: {score: 0}}
                         });
                     });
             });

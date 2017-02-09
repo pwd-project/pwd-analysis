@@ -21,23 +21,23 @@ app.get('/analysis', function (req, res) {
         if (status === 'success') {
             const analyses = analyser.analyses.map((analysis) => {
                 return analysis.run(page)
-                    .catch((err) => {
+                    .then((result) => {
+                        return {name: analysis.name, result: result};
+                    }).catch((err) => {
                         console.log('metric [' + analysis.name + '] did not return a valid report, sending score 0', err);
                         return {name: analysis.name, result: {score: 0}}
-                    }).then((result) => {
-                        return {name: analysis.name, result: result};
                     });
             });
             const multiAnalyses = analyser.multiAnalyses.map(multiAnalysis => {
                 return multiAnalysis.run(page)
-                    .catch((err) => {
+                    .then((result) => {
+                        return result.map(singleResult => {
+                            return {name: singleResult.originalName, result: {score: singleResult.score}}
+                        });
+                    }).catch((err) => {
                         console.log('metric a11y did not return a valid report, sending score 0', err);
                         return multiAnalysis.names.map((it) => {
                             return {name: it, score: 0}
-                        });
-                    }).then((result) => {
-                        return result.map(singleResult => {
-                            return {name: singleResult.originalName, result: {score: singleResult.score}}
                         });
                     });
             });

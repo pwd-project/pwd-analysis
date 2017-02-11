@@ -11,19 +11,33 @@ const pool = new PhantomPool({
     max: 5,
     min: 2,
     maxUses: 2,
-    phantomArgs: [['--ignore-ssl-errors=true', '--disk-cache=true', '--load-images=no']]
+    phantomArgs: [['--ignore-ssl-errors=true', '--disk-cache=true', '--load-images=false']]
+});
+
+app.use(function (req, res, next) {
+    res.setTimeout(20000, function () {
+        errorResponse(res)
+    });
+
+    next();
 });
 
 app.get('/analysis', function (req, res) {
     const target = req.query.url;
     pool.use(async (instance) => {
         console.log('analysing: ', target);
-        const page = await instance.createPage().catch(error => errorResponse()).then(page => {
+        const page = await instance.createPage().catch(error => errorResponse(res)).then(page => {
             page.setting('resourceTimeout', 5000);
             return page;
         });
-        const status = await page.open(target, {operation: 'GET'}).catch(error => errorResponse());
-        if (status === 'success') runAnalysis(page); else errorResponse();
+        page.on('onResourceRequested', true, function (requestData, networkRequest) {
+            var match = requestData.url.match(/fbexternal-a\.akamaihd\.net\/safe_image|\.pdf|\.mp4|\.png|\.gif|\.avi|\.bmp|\.jpg|\.jpeg|\.swf|\.js|\.fla|\.xsd|\.xls|\.doc|\.ppt|\.zip|\.rar|\.7zip|\.gz|\.csv/gim);
+            if (match !== null) {
+                networkRequest.abort(); // This would work, because you are accessing to the non serialized networkRequest.
+            }
+        });
+        const status = await page.open(target, {operation: 'GET'}).catch(error => errorResponse(res));
+        if (status === 'success') runAnalysis(page); else errorResponse(res);
     });
 
     function runAnalysis(page) {
@@ -68,17 +82,19 @@ app.get('/analysis', function (req, res) {
             });
     }
 
-    function errorResponse() {
-        let names = [];
-        analyser.analyses.forEach(analysis => names.push(analysis.name));
-        analyser.multiAnalyses.map(it => it.names).map((it) => {
-            it.forEach(it => names.push(it));
-        });
-        let results = {};
-        names.forEach((name) => results[name] = {score: 0});
-        res.json({analysis: results, status: {responseCode: 408}});
-    }
+
 });
+
+function errorResponse(res) {
+    let names = [];
+    analyser.analyses.forEach(analysis => names.push(analysis.name));
+    analyser.multiAnalyses.map(it => it.names).map((it) => {
+        it.forEach(it => names.push(it));
+    });
+    let results = {};
+    names.forEach((name) => results[name] = {score: 0});
+    res.json({analysis: results, status: {responseCode: 408}});
+}
 
 app.listen(process.env.PORT || 5000);
 console.log('started on port:' + (process.env.PORT || 5000));

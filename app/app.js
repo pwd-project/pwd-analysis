@@ -8,7 +8,9 @@ const app = express();
 const analyser = new Analyser();
 
 const pool = new PhantomPool({
-    maxUses: 10,
+    max: 5,
+    min: 2,
+    maxUses: 2,
     phantomArgs: [['--ignore-ssl-errors=true', '--disk-cache=true', '--load-images=no']]
 });
 
@@ -79,4 +81,5 @@ app.get('/analysis', function (req, res) {
 });
 
 app.listen(process.env.PORT || 5000);
+pool.drain().then(() => pool.clear());
 console.log('started on port:' + (process.env.PORT || 5000));

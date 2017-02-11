@@ -81,5 +81,4 @@ app.get('/analysis', function (req, res) {
 });
 
 app.listen(process.env.PORT || 5000);
-pool.drain().then(() => pool.clear());
 console.log('started on port:' + (process.env.PORT || 5000));

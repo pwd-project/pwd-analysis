@@ -2,13 +2,13 @@
 
 module.exports = {
     name: 'anyTitle',
-    run: function (page, callback) {
+    run: (page) => {
         return page.evaluate(function () {
             var title = document.title;
             return {
                 score: 100 * (title !== ''),
                 title: title
             };
-        }, callback);
+        });
     }
 };

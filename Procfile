@@ -1,1 +1,1 @@
-web: phantomjs app/app.js
+web: node --max-old-space-size=500 --harmony-async-await app/app.js

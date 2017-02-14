@@ -2,7 +2,7 @@
 
 module.exports = {
     name: 'bigFont',
-    run: function (page, callback) {
+    run: (page) => {
         return page.evaluate(function () {
             var elem = document.querySelector('a[title*="cionka du"],a[title*="ksza wielko"],a[title*="kszy rozmiar"],a[id="fontInc"],a[id="inc_font"],a[onClick*="FontSize"],a[class="big-font"],a[class*="resize"],span[title*="ksz tekst"],li[class*="resize"]');
             var href = elem;
@@ -16,6 +16,6 @@ module.exports = {
                 score: 100 * (href !== '') * (href !== null),
                 href: href
             };
-        }, callback);
+        });
     }
 };

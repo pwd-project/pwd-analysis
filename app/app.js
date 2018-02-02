@@ -8,14 +8,14 @@ const app = express();
 const analyser = new Analyser();
 
 const pool = new PhantomPool({
-    max: 10,
+    max: 5,
     min: 2,
     maxUses: 2,
     phantomArgs: [['--ignore-ssl-errors=true', '--disk-cache=true', '--load-images=false']]
 });
 
 app.use(function (req, res, next) {
-    res.setTimeout(25000, function () {
+    res.setTimeout(20000, function () {
         errorResponse(res)
     });
 
